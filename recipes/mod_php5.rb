@@ -20,6 +20,12 @@
 case node['platform_family']
 when 'debian'
   package 'libapache2-mod-php5'
+  %w{php5-mysql php5-mcrypt php5-memcache php5-sasl  php5-svn php5-curl  php5-dev php5-gd  php5-pgsql  php5-sqlite php5-xmlrpc}.each do |pkg|
+    package pkg do
+      action :install
+    end
+  end
+
 when 'arch'
   package 'php-apache' do
     notifies :run, 'execute[generate-module-list]', :immediately
